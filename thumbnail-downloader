@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create beautiful, SEO-friendly thumbnails for your content in seconds">
+    <meta name="keywords" content="thumbnail generator, image creator, SEO images, social media thumbnails">
+    <title>Thumbnail Creator | Beautiful & SEO-Friendly Thumbnail Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖼️</text></svg>">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --dark-color: #1a1a2e;
+            --light-color: #f8f9fa;
+            --gray-color: #6c757d;
+            --success-color: #4bb543;
+            --error-color: #ff3333;
+            
+            --font-main: 'Poppins', sans-serif;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--dark-color);
+            line-height: 1.6;
+            background-color: #f5f7fa;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-family: var(--font-main);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+
+        /* Header */
+        .header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--dark-color);
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        .nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav ul li {
+            margin-left: 30px;
+        }
+
+        .nav ul li a {
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+
+        .nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ed 100%);
+        }
+
+        .hero .container {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .hero-content {
+            flex: 1;
+        }
+
+        .hero-image {
+            flex: 1;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: var(--primary-color);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--gray-color);
+            margin-bottom: 30px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .thumbnail-preview {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .thumbnail-preview img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .thumbnail-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+            color: white;
+        }
+
+        .thumbnail-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .thumbnail-subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(67, 97, 238, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+
+        /* Creator Section */
+        .creator-section {
+            padding: 80px 0;
+            background-color: #f5f7fa;
+        }
+
+        .creator-container {
+            display: flex;
+            gap: 30px;
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .editor-panel {
+            flex: 1;
+        }
+
+        .preview-panel {
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input[type="text"],
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        .file-upload {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        #file-name {
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+
+        .thumbnail-output {
+            width: 100%;
+            height: 225px;
+            background-color: #eee;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .download-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Templates Section */
+        .templates {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .template-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .template-preview {
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .template-preview h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .template-preview p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .template-card .btn-small {
+            display: block;
+            width: 100%;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand .logo {
+            color: white;
+        }
+
+        .footer-brand .logo span {
+            color: var(--accent-color);
+        }
+
+        .footer-brand p {
+            margin-top: 15px;
+            opacity: 0.8;
+        }
+
+        .footer-links h3,
+        .footer-contact h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+
+        .footer-links ul,
+        .footer-contact ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links ul li a {
+            color: white;
+            opacity: 0.8;
+        }
+
+        .footer-links ul li a:hover {
+            opacity: 1;
+            color: var(--accent-color);
+        }
+
+        .footer-contact ul li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.8;
+        }
+
+        .footer-contact ul li i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-links a {
+            color: white;
+            opacity: 0.8;
+            font-size: 1.2rem;
+        }
+
+        .social-links a:hover {
+            opacity: 1;
+            color: var(--accent-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .cta-buttons {
+                justify-content: center;
+            }
+            
+            .creator-container {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header .container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav ul {
+                margin-top: 20px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .nav ul li {
+                margin-left: 0;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Thumbnail<span>Gen</span></h1>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#templates">Templates</a></li>
+                </ul>
+            </nav>
+            <button class="btn btn-primary" id="cta-header">Create Thumbnail</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Create Stunning, <span>SEO-Friendly</span> Thumbnails</h1>
+                    <p class="subtitle">Boost your click-through rates with beautiful, optimized thumbnails in minutes.</p>
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary" id="cta-main">Start Creating</button>
+                        <button class="btn btn-secondary">Explore Templates</button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="thumbnail-preview">
+                        <img src="https://via.placeholder.com/400x225" alt="Example thumbnail preview" id="thumbnail-preview">
+                        <div class="thumbnail-overlay">
+                            <h3 class="thumbnail-title">Your Amazing Title Here</h3>
+                            <p class="thumbnail-subtitle">Customize this text to match your content</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <h2 class="section-title">Why Choose Our Thumbnail Creator</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>SEO Optimized</h3>
+                        <p>Built with SEO best practices to help your content rank higher in search results.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>Responsive Design</h3>
+                        <p>Perfectly sized thumbnails that look great on all devices and platforms.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3>Beautiful Templates</h3>
+                        <p>Professionally designed templates to make your thumbnails stand out.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h3>Lightning Fast</h3>
+                        <p>Generate high-quality thumbnails in seconds with our optimized engine.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="creator-section" id="how-it-works">
+            <div class="container">
+                <h2 class="section-title">Create Your Thumbnail</h2>
+                <div class="creator-container">
+                    <div class="editor-panel">
+                        <div class="form-group">
+                            <label for="thumbnail-title">Title</label>
+                            <input type="text" id="thumbnail-title" placeholder="Enter your thumbnail title">
+                        </div>
+                        <div class="form-group">
+                            <label for="thumbnail-subtitle">Subtitle</label>
+                            <input type="text" id="thumbnail-subtitle" placeholder="Enter a subtitle (optional)">
+                        </div>
+                        <div class="form-group">
+                            <label for="thumbnail-bg">Background Image</label>
+                            <div class="file-upload">
+                                <input type="file" id="thumbnail-bg" accept="image/*">
+                                <label for="thumbnail-bg" class="btn btn-secondary">Choose Image</label>
+                                <span id="file-name">No file chosen</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="thumbnail-style">Style Preset</label>
+                            <select id="thumbnail-style">
+                                <option value="modern">Modern</option>
+                                <option value="minimal">Minimal</option>
+                                <option value="bold">Bold Colors</option>
+                                <option value="dark">Dark Mode</option>
+                                <option value="light">Light & Airy</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="title-color">Title Color</label>
+                            <input type="color" id="title-color" value="#ffffff">
+                        </div>
+                        <div class="form-group">
+                            <label for="subtitle-color">Subtitle Color</label>
+                            <input type="color" id="subtitle-color" value="#f0f0f0">
+                        </div>
+                        <button class="btn btn-primary" id="generate-btn">Generate Thumbnail</button>
+                    </div>
+                    <div class="preview-panel">
+                        <div class="thumbnail-output" id="thumbnail-output">
+                            <div class="thumbnail-overlay">
+                                <h3 class="thumbnail-title" id="output-title">Your Title Here</h3>
+                                <p class="thumbnail-subtitle" id="output-subtitle">Your subtitle here</p>
+                            </div>
+                        </div>
+                        <div class="download-options">
+                            <button class="btn btn-secondary" id="download-png">Download PNG</button>
+                            <button class="btn btn-secondary" id="download-jpg">Download JPG</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="templates" id="templates">
+            <div class="container">
+                <h2 class="section-title">Popular Templates</h2>
+                <div class="templates-grid">
+                    <div class="template-card">
+                        <div class="template-preview" style="background-color: #4a6fa5;">
+                            <h3>Modern Blue</h3>
+                            <p>Clean & Professional</p>
+                        </div>
+                        <button class="btn btn-small">Use This Template</button>
+                    </div>
+                    <div class="template-card">
+                        <div class="template-preview" style="background-color: #333;">
+                            <h3>Dark Elegance</h3>
+                            <p>Sophisticated Look</p>
+                        </div>
+                        <button class="btn btn-small">Use This Template</button>
+                    </div>
+                    <div class="template-card">
+                        <div class="template-preview" style="background-color: #ff6b6b;">
+                            <h3>Bold Red</h3>
+                            <p>High Contrast</p>
+                        </div>
+                        <button class="btn btn-small">Use This Template</button>
+                    </div>
+                    <div class="template-card">
+                        <div class="template-preview" style="background-color: #f8f9fa;">
+                            <h3>Minimal White</h3>
+                            <p>Clean & Simple</p>
+                        </div>
+                        <button class="btn btn-small">Use This Template</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h2 class="logo">Thumbnail<span>Gen</span></h2>
+                    <p>Creating beautiful, effective thumbnails for your content.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#templates">Templates</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@thumbnailgen.com</li>
+                        <li><i class="fas fa-phone"></i> (123) 456-7890</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 ThumbnailGen. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const thumbnailBgInput = document.getElementById('thumbnail-bg');
+            const thumbnailTitleInput = document.getElementById('thumbnail-title');
+            const thumbnailSubtitleInput = document.getElementById('thumbnail-subtitle');
+            const thumbnailStyleSelect = document.getElementById('thumbnail-style');
+            const titleColorInput = document.getElementById('title-color');
+            const subtitleColorInput = document.getElementById('subtitle-color');
+            const generateBtn = document.getElementById('generate-btn');
+            const thumbnailOutput = document.getElementById('thumbnail-output');
+            const outputTitle = document.getElementById('output-title');
+            const outputSubtitle = document.getElementById('output-subtitle');
+            const downloadPngBtn = document.getElementById('download-png');
+            const downloadJpgBtn = document.getElementById('download-jpg');
+            const fileNameSpan = document.getElementById('file-name');
+            
+            // Template buttons
+            const templateButtons = document.querySelectorAll('.template-card .btn-small');
+            
+            // File input change handler
+            thumbnailBgInput.addEventListener('change', function(e) {
+                if (e.target.files.length > 0) {
+                    const file = e.target.files[0];
+                    fileNameSpan.textContent = file.name;
+                    
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        thumbnailOutput.style.backgroundImage = `url(${event.target.result})`;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Generate thumbnail handler
+            generateBtn.addEventListener('click', function() {
+                // Update title and subtitle
+                outputTitle.textContent = thumbnailTitleInput.value || 'Your Title Here';
+                outputSubtitle.textContent = thumbnailSubtitleInput.value || 'Your subtitle here';
+                
+                // Update colors
+                outputTitle.style.color = titleColorInput.value;
+                outputSubtitle.style.color = subtitleColorInput.value;
+                
+                // Apply style preset
+                applyStylePreset(thumbnailStyleSelect.value);
+            });
+            
+            // Apply style preset function
+            function applyStylePreset(preset) {
+                switch(preset) {
+                    case 'modern':
+                        thumbnailOutput.style.backgroundImage = 'linear-gradient(135deg, #4361ee, #3a0ca3)';
+                        outputTitle.style.color = '#ffffff';
+                        outputSubtitle.style.color = '#f0f0f0';
+                        break;
+                    case 'minimal':
+                        thumbnailOutput.style.backgroundImage = 'linear-gradient(135deg, #f8f9fa, #e9ecef)';
+                        outputTitle.style.color = '#333333';
+                        outputSubtitle.style.color = '#666666';
+                        break;
+                    case 'bold':
+                        thumbnailOutput.style.backgroundImage = 'linear-gradient(135deg, #ff6b6b, #d00000)';
+                        outputTitle.style.color = '#ffffff';
+                        outputSubtitle.style.color = '#f0f0f0';
+                        break;
+                    case 'dark':
+                        thumbnailOutput.style.backgroundImage = 'linear-gradient(135deg, #333333, #000000)';
+                        outputTitle.style.color = '#ffffff';
+                        outputSubtitle.style.color = '#cccccc';
+                        break;
+                    case 'light':
+                        thumbnailOutput.style.backgroundImage = 'linear-gradient(135deg, #a8dadc, #f1faee)';
+                        outputTitle.style.color = '#1d3557';
+                        outputSubtitle.style.color = '#457b9d';
+                        break;
+                }
+            }
+            
+            // Template buttons handler
+            templateButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const templateCard = this.closest('.template-card');
+                    const templatePreview = templateCard.querySelector('.template-preview');
+                    
+                    // Get the background color from the preview
+                    const bgColor = templatePreview.style.backgroundColor;
+                    
+                    // Apply to thumbnail output
+                    thumbnailOutput.style.backgroundImage = 'none';
+                    thumbnailOutput.style.backgroundColor = bgColor;
+                    
+                    // Set appropriate text colors based on brightness
+                    const isDark = isDarkColor(bgColor);
+                    outputTitle.style.color = isDark ? '#ffffff' : '#333333';
+                    outputSubtitle.style.color = isDark ? '#f0f0f0' : '#666666';
+                    
+                    // Update inputs to match
+                    titleColorInput.value = isDark ? '#ffffff' : '#333333';
+                    subtitleColorInput.value = isDark ? '#f0f0f0' : '#666666';
+                });
+            });
+            
+            // Helper function to check if a color is dark
+            function isDarkColor(color) {
+                // Convert hex to RGB
+                let r, g, b;
+                if (color.match(/^rgb/)) {
+                    const rgb = color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/);
+                    r = rgb[1];
+                    g = rgb[2];
+                    b = rgb[3];
+                } else {
+                    const hex = color.replace('#', '');
+                    r = parseInt(hex.substring(0, 2), 16);
+                    g = parseInt(hex.substring(2, 4), 16);
+                    b = parseInt(hex.substring(4, 6), 16);
+                }
+                
+                // Calculate luminance
+                const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+                return luminance < 0.5;
+            }
+            
+            // Download handlers
+            downloadPngBtn.addEventListener('click', function() {
+                downloadThumbnail('png');
+            });
+            
+            downloadJpgBtn.addEventListener('click', function() {
+                downloadThumbnail('jpeg');
+            });
+            
+            // Download thumbnail function
+            function downloadThumbnail(format) {
+                // Create a canvas element
+                const canvas = document.createElement('canvas');
+                canvas.width = 800;
+                canvas.height = 450;
+                const ctx = canvas.getContext('2d');
+                
+                // Get the background image or color
+                const bgImage = thumbnailOutput.style.backgroundImage;
+                const bgColor = thumbnailOutput.style.backgroundColor || '#eeeeee';
+                
+                // Draw background
+                if (bgImage !== 'none') {
+                    // If it's a gradient or image
+                    const img = new Image();
+                    img.onload = function() {
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        drawTextOnCanvas();
+                    };
+                    
+                    if (bgImage.startsWith('linear-gradient')) {
+                        // Create gradient
+                        const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                        const colors = bgImage.match(/rgba?\([^)]+\)/g);
+                        if (colors && colors.length >= 2) {
+                            gradient.addColorStop(0, colors[0]);
+                            gradient.addColorStop(1, colors[1]);
+                            ctx.fillStyle = gradient;
+                            ctx.fillRect(0, 0, canvas.width, canvas.height);
+                            drawTextOnCanvas();
+                        }
+                    } else if (bgImage.startsWith('url')) {
+                        // It's an image
+                        img.src = bgImage.match(/url\(["']?([^"']*)["']?\)/)[1];
+                    }
+                } else {
+                    // Solid color background
+                    ctx.fillStyle = bgColor;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    drawTextOnCanvas();
+                }
+                
+                function drawTextOnCanvas() {
+                    // Draw title
+                    ctx.font = 'bold 48px Poppins, sans-serif';
+                    ctx.fillStyle = outputTitle.style.color || '#ffffff';
+                    ctx.textAlign = 'center';
+                    
+                    // Wrap text
+                    const title = outputTitle.textContent;
+                    const maxWidth = canvas.width - 100;
+                    const lineHeight = 60;
+                    const x = canvas.width / 2;
+                    let y = canvas.height / 2 - 30;
+                    
+                    const words = title.split(' ');
+                    let line = '';
+                    
+                    for (let i = 0; i < words.length; i++) {
+                        const testLine = line + words[i] + ' ';
+                        const metrics = ctx.measureText(testLine);
+                        const testWidth = metrics.width;
+                        
+                        if (testWidth > maxWidth && i > 0) {
+                            ctx.fillText(line, x, y);
+                            line = words[i] + ' ';
+                            y += lineHeight;
+                        } else {
+                            line = testLine;
+                        }
+                    }
+                    ctx.fillText(line, x, y);
+                    
+                    // Draw subtitle if exists
+                    const subtitle = outputSubtitle.textContent;
+                    if (subtitle && subtitle !== 'Your subtitle here') {
+                        ctx.font = '32px Poppins, sans-serif';
+                        ctx.fillStyle = outputSubtitle.style.color || '#f0f0f0';
+                        y += lineHeight + 20;
+                        ctx.fillText(subtitle, x, y);
+                    }
+                    
+                    // Trigger download
+                    const link = document.createElement('a');
+                    link.download = `thumbnail-${new Date().getTime()}.${format}`;
+                    link.href = canvas.toDataURL(`image/${format}`);
+                    link.click();
+                }
+            }
+            
+            // Call generate on page load to show default thumbnail
+            generateBtn.click();
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // CTA buttons scroll to creator section
+            const ctaButtons = document.querySelectorAll('#cta-header, #cta-main');
+            ctaButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelector('#how-it-works').scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
